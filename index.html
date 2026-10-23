@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Why choose me: Yan Paing Oo</title>
+<style>
+:root{--bg:#eceff3;--steel:#cdd5df;--steel-edge:#aab5c3;--ink:#16202c;--muted:#566275;--screen:#0b2a6b;--screen-ink:#ffffff;--key:#f7f9fc;--key-ink:#0b2a6b;--accent:#1f5fbf;--note:#ffffff;--slot:#0d1117;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1218;--steel:#232b36;--steel-edge:#394555;--ink:#eef2f8;--muted:#a6b1c2;--screen:#133a96;--key:#2a3442;--key-ink:#dce7ff;--accent:#8db1ff;--note:#1d2531}}
+:root[data-theme="dark"]{--bg:#0e1218;--steel:#232b36;--steel-edge:#394555;--ink:#eef2f8;--muted:#a6b1c2;--screen:#133a96;--key:#2a3442;--key-ink:#dce7ff;--accent:#8db1ff;--note:#1d2531}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Avenir Next","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;display:flex;justify-content:center;padding:22px 14px 44px}
+main{width:100%;max-width:520px}
+h1{font-size:26px;line-height:1.15;margin:0 0 6px;font-weight:700}
+.lead{margin:0 0 16px;color:var(--muted)}
+.atm{background:var(--steel);border:2px solid var(--steel-edge);border-radius:26px 26px 18px 18px;padding:16px 16px 20px}
+.screen{background:var(--screen);color:var(--screen-ink);border-radius:14px;padding:16px 18px;min-height:112px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.08)}
+.screen strong{display:block;font-size:19px;line-height:1.25;margin-bottom:6px}
+.screen span{opacity:.9;font-size:15px}
+.keys{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 16px}
+.key{background:var(--key);color:var(--key-ink);border:2px solid var(--steel-edge);border-radius:12px;padding:12px 12px;min-height:56px;font:inherit;font-weight:650;text-align:left;cursor:pointer;line-height:1.25;transition:transform .12s ease,border-color .12s ease}
+.key:hover{border-color:var(--accent)}
+.key:active{transform:translateY(2px)}
+.key[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 5px 0 0 var(--tone)}
+.key:focus-visible,.again:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.slot{height:14px;background:var(--slot);border-radius:7px;box-shadow:0 2px 0 var(--steel-edge)}
+.tray{position:relative;overflow:hidden;min-height:176px;padding:0 20px}
+.note{position:relative;background:var(--note);border:1px solid var(--steel-edge);border-left:10px solid var(--tone);border-radius:6px 6px 10px 10px;padding:14px 16px 16px;transform:translateY(-105%);opacity:0;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.note.out{transform:translateY(0);opacity:1}
+.note h2{font-size:17px;line-height:1.25;margin:0 0 6px}
+.note p{margin:0;font-size:15.5px}
+.hint{color:var(--muted);font-size:15px;padding-top:18px;margin:0}
+.progress{margin:12px 2px 0;color:var(--muted);font-size:14px}
+.receipt{display:none;margin-top:18px;background:var(--note);border:1px dashed var(--steel-edge);border-radius:10px;padding:16px 18px}
+.receipt.show{display:block}
+.receipt h2{font-size:18px;margin:0 0 8px}
+.receipt p{margin:0 0 6px;font-size:15px}
+.receipt .close{margin-top:10px;font-weight:650}
+.again{margin-top:10px;font:inherit;font-weight:650;color:var(--accent);background:none;border:2px solid var(--accent);border-radius:10px;padding:8px 14px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.note,.key{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Why choose me</h1>
+<p class="lead">I am Yan Paing Oo. This ATM dispenses four reasons. Press a key and take the one you want to read.</p>
+<section class="atm" aria-label="Reason dispenser">
+  <div class="screen" id="screen" aria-live="polite"><strong id="s-title">Welcome. What would you like today?</strong><span id="s-text">Four keys are lit. Each one pays out a reason to choose me for BNK’s cash and logistics operation.</span></div>
+  <div class="keys" id="keys">
+    <button class="key" type="button" data-id="a" style="--tone:#7b5ea7" aria-pressed="false">Think like a customer</button>
+    <button class="key" type="button" data-id="b" style="--tone:#2f6fb5" aria-pressed="false">Run like an operator</button>
+    <button class="key" type="button" data-id="c" style="--tone:#3f8f5c" aria-pressed="false">Bring ideas from the field</button>
+    <button class="key" type="button" data-id="d" style="--tone:#9a6a3f" aria-pressed="false">Check my numbers</button>
+  </div>
+  <div class="slot" aria-hidden="true"></div>
+  <div class="tray"><p class="hint" id="hint">Your reason will slide out here.</p><article class="note" id="note" hidden><h2 id="n-title"></h2><p id="n-text"></p></article></div>
+</section>
+<p class="progress" id="progress">0 of 4 reasons withdrawn</p>
+<section class="receipt" id="receipt" aria-label="Receipt">
+  <h2>Transaction complete</h2>
+  <p>Yan Paing Oo, Operations and Marketing Manager at Aventura Park, Dubai’s Largest Zipline Park (2023 – 2026).</p>
+  <p>Before: Marketing Manager at AIA Myanmar, Canal+ Myanmar and AirAsia Myanmar.</p>
+  <p>Education: GEMBA student at Thammasat Business School.</p>
+  <p class="close">Fill every ATM with just enough cash, and every customer with the confidence that it will be there.</p>
+  <button class="again" type="button" id="again">Start a new transaction</button>
+</section>
+</main>
+<script>
+(function(){
+  var R={
+    a:{t:"Think like a customer",m:"Marketing at AIA, Canal+ and AirAsia in Myanmar taught me that people judge a brand in one moment. At an ATM, that moment is the screen saying out of service. I design the operation backwards from that moment."},
+    b:{t:"Run like an operator",m:"At Aventura Park I manage operations and marketing together. A zipline park and an ATM network follow the same rules: safety first, capacity on peak days, preventive checks, and customers who remember every failure."},
+    c:{t:"Bring ideas from the field",m:"The mobile ATM comes from what I saw in remote Sri Lanka, not from a textbook. I look for the idea that already works somewhere, then adapt it with numbers and a pilot."},
+    d:{t:"Check my numbers",m:"Every number comes from the exam or the class tools, or is marked (A) as my assumption. Fees are tied to KPIs, exit rights are written in, and a standby provider keeps the service national."}
+  };
+  var seen={}, count=0;
+  var keys=document.querySelectorAll(".key"), note=document.getElementById("note");
+  var sT=document.getElementById("s-title"), sX=document.getElementById("s-text");
+  function show(id,btn){
+    var r=R[id];
+    if(!seen[id]){seen[id]=true;count++;}
+    btn.setAttribute("aria-pressed","true");
+    sT.textContent="Dispensing: "+r.t;
+    sX.textContent="Please take your reason from the slot.";
+    document.getElementById("hint").hidden=true;
+    note.hidden=false; note.classList.remove("out");
+    note.style.setProperty("--tone",getComputedStyle(btn).getPropertyValue("--tone"));
+    document.getElementById("n-title").textContent=r.t;
+    document.getElementById("n-text").textContent=r.m;
+    void note.offsetWidth; note.classList.add("out");
+    document.getElementById("progress").textContent=count+" of 4 reasons withdrawn";
+    if(count===4){document.getElementById("receipt").classList.add("show");}
+  }
+  Array.prototype.forEach.call(keys,function(b){b.addEventListener("click",function(){show(b.getAttribute("data-id"),b);});});
+  document.getElementById("again").addEventListener("click",function(){
+    seen={};count=0;
+    Array.prototype.forEach.call(keys,function(b){b.setAttribute("aria-pressed","false");});
+    note.classList.remove("out");note.hidden=true;document.getElementById("hint").hidden=false;
+    sT.textContent="Welcome. What would you like today?";
+    sX.textContent="Four keys are lit. Each one pays out a reason to choose me for BNK’s cash and logistics operation.";
+    document.getElementById("progress").textContent="0 of 4 reasons withdrawn";
+    document.getElementById("receipt").classList.remove("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+})();
+</script>
+</body>
+</html>
